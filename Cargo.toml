@@ -1,0 +1,19 @@
+[package]
+name = "template"
+version = "0.1.0"
+authors = ["Author <email@provider.com>"]
+edition = "2018"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+bench = false
+
+[dependencies]
+janetrs = { git = "https://github.com/GrayJack/janetrs", branch = "dev"}
+janetrs_macros = { git = "https://github.com/GrayJack/janetrs", branch = "dev" }
