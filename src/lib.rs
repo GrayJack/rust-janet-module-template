@@ -1,4 +1,8 @@
-use janetrs::{janet_mod, jpanic, types::*, util::check_fix_arity};
+use janetrs::{
+    janet_mod,
+    types::{Janet, JanetBuffer, JanetString, JanetTuple, JanetType},
+    util::check_fix_arity,
+};
 use janetrs_macros::janet_fn;
 
 #[janet_fn]
@@ -13,16 +17,16 @@ pub fn chars(args: &mut [Janet]) -> Janet {
     check_fix_arity(args, 1);
     match args[0].kind() {
         JanetType::Buffer => args[0]
-            .unwrap::<JanetBuffer<'_>>()
+            .unwrap::<JanetBuffer>()
             .unwrap()
             .chars()
-            .collect::<JanetTuple<'_>>()
+            .collect::<JanetTuple>()
             .into(),
         JanetType::String => args[0]
-            .unwrap::<JanetString<'_>>()
+            .unwrap::<JanetString>()
             .unwrap()
             .chars()
-            .collect::<JanetTuple<'_>>()
+            .collect::<JanetTuple>()
             .into(),
         _ => Janet::nil(),
     }
