@@ -20,4 +20,9 @@
   (phony "all" ["build-rust-code" "cp-lib"])
 
   (add-dep "build" "all")
+
+  (phony "clean-target" []
+    (sh/$ rm -rf target))
+
+  (add-dep "clean" "clean-target")
 )
