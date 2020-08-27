@@ -1,28 +1,31 @@
 (declare-project
-  :name "template"
-  :dependencies ["https://github.com/andrewchambers/janet-sh.git"])
+  :name "template")
 
 (post-deps
-  (import sh)
-
   (declare-native
     :name "template"
     :source [])
 
   (phony "build-rust-code" []
-    (sh/$ cargo build --release --target-dir target --quiet))
+    (os/execute ["cargo" "build" "--release" "--target-dir" "target" "--quiet"] :p))
 
   (phony "cp-lib" []
-    (sh/$ mkdir -p build)
-    (sh/$ cp target/release/libtemplate.so build/template.so)
-    (sh/$ cp target/release/libtemplate.a build/template.a))
+    (os/execute ["mkdir" "-p" "build"] :p)
+    (os/execute ["cp" "target/release/libtemplate.so" "build/template.so"] :p)
+    (os/execute ["cp" "target/release/libtemplate.a" "build/template.a"] :p))
+
+  (phony "build-debug" []
+    (os/execute ["cargo" "build" "--debug" "--target-dir" "target" "--quiet"] :p)
+    (os/execute ["mkdir" "-p" "build"] :p)
+    (os/execute ["cp" "target/debug/libtemplate.so" "build/template.so"] :p)
+    (os/execute ["cp" "target/debug/libtemplate.a" "build/template.a"] :p))
 
   (phony "all" ["build-rust-code" "cp-lib"])
 
   (add-dep "build" "all")
 
   (phony "clean-target" []
-    (sh/$ rm -rf target))
+    (os/execute ["rm" "-rf" "target"] :p))
 
   (add-dep "clean" "clean-target")
 )
