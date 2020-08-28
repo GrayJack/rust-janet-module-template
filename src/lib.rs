@@ -1,9 +1,8 @@
 use janetrs::{
-    janet_mod,
+    janet_fn, janet_mod,
     types::{Janet, JanetBuffer, JanetString, JanetTuple, JanetType},
     util::check_fix_arity,
 };
-use janetrs_macros::janet_fn;
 
 #[janet_fn]
 pub fn rust_hello(args: &mut [Janet]) -> Janet {
