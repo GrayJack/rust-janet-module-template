@@ -15,4 +15,4 @@ crate-type = ["cdylib", "staticlib"]
 bench = false
 
 [dependencies]
-janetrs = { version = "0.1.1", features = ["attr-macros"]}
+janetrs = { version = "0.1.2", features = ["attr-macros"]}
