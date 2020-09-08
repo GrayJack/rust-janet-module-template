@@ -1,5 +1,5 @@
 use janetrs::{
-    janet_fn, janet_mod,
+    janet_fn, janet_mod, jpanic,
     types::{Janet, JanetBuffer, JanetString, JanetTuple, JanetType},
     util::check_fix_arity,
 };
@@ -27,7 +27,10 @@ pub fn chars(args: &mut [Janet]) -> Janet {
             .chars()
             .collect::<JanetTuple>()
             .into(),
-        _ => Janet::nil(),
+        _ => jpanic!(
+            "bad slot #0, expected string|buffer, got {}",
+            args[0].kind()
+        ),
     }
 }
 
