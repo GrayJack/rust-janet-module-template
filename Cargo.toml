@@ -15,4 +15,4 @@ crate-type = ["cdylib", "staticlib"]
 bench = false
 
 [dependencies]
-janetrs = { version = "0.1.2", features = ["attr-macros"]}
+janetrs = { git = "https://github.com/GrayJack/janetrs.git", branch = "dev", features = ["attr-macros"]}
