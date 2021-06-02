@@ -4,7 +4,7 @@ A template of a native Janet module written in Rust.
 
 ## Usage example
 
-### Instalation
+### Installation
 
 ```sh
 $ jpm install https://github.com/GrayJack/rust-janet-module-template.git
