@@ -15,6 +15,10 @@ crate-type = ["cdylib", "staticlib"]
 bench = false
 
 [dependencies]
-janetrs = "0.3.1"
-## If the version of the system Janet if different from the version the JanetRS header comes from, you can use the `system feature flag`
-# janetrs = { version = "0.3.1", features = ["system"] }
+janetrs = "0.3.2"
+
+[features]
+default = []
+## Feature to link to system Janet
+# If the version of the system Janet if different from the version the JanetRS header comes from, you can use the `system feature flag`
+system-janet = ["janetrs/system"]
