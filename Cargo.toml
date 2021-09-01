@@ -15,7 +15,7 @@ crate-type = ["cdylib", "staticlib"]
 bench = false
 
 [dependencies]
-janetrs = "0.3.2"
+janetrs = "0.4.0"
 
 [features]
 default = []

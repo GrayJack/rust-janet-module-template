@@ -1,15 +1,20 @@
-use janetrs::{janet_fn, janet_mod, jpanic, util::check_fix_arity, Janet, JanetTuple, TaggedJanet};
+use janetrs::{declare_janet_mod, janet_fn, jpanic, Janet, JanetTuple, TaggedJanet};
 
-#[janet_fn]
-pub fn rust_hello(args: &mut [Janet]) -> Janet {
-    check_fix_arity(args, 0);
+/// (template/hello)
+///
+/// Rust say hello
+#[janet_fn(arity(fix(0)))]
+pub fn rust_hello(_args: &mut [Janet]) -> Janet {
     println!("Hello from Rust!");
     Janet::nil()
 }
 
-#[janet_fn]
+/// (template/chars)
+///
+/// If the argument is a buffer or string, return a array or tuple of the chars of the argument,
+/// else return nil
+#[janet_fn(arity(fix(1)))]
 pub fn chars(args: &mut [Janet]) -> Janet {
-    check_fix_arity(args, 1);
     match args[0].unwrap() {
         TaggedJanet::Buffer(b) => b.chars().collect::<JanetTuple>().into(),
         TaggedJanet::String(s) => s.chars().collect::<JanetTuple>().into(),
@@ -20,8 +25,7 @@ pub fn chars(args: &mut [Janet]) -> Janet {
     }
 }
 
-janet_mod!("template";
-    {"hello", rust_hello, "(template/hello)\n\nRust say hello"},
-    {"chars", chars, "(template/chars)\n\nIf the argument is a buffer or string, return a array or \
-    tuple of the chars of the argument, else return nil"},
+declare_janet_mod!("template";
+    {"hello", rust_hello},
+    {"chars", chars},
 );
