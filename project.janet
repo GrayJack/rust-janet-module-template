@@ -7,18 +7,30 @@
     :source [])
 
   (phony "build-rust-code" []
-    (os/execute ["cargo" "build" "--release" "--target-dir" "target" "--quiet"] :p))
+    (os/execute ["cargo" "build" "--release" "--target-dir" "target"] :p))
 
   (phony "cp-lib" []
     (os/execute ["mkdir" "-p" "build"] :p)
-    (os/execute ["cp" "target/release/libtemplate.so" "build/template.so"] :p)
-    (os/execute ["cp" "target/release/libtemplate.a" "build/template.a"] :p))
+    (os/execute ["cp" "target/release/libtemplate.a" "build/template.a"] :p)
+    (let [os (os/which)]
+      (if (= os :linux)
+        (os/execute ["cp" "target/release/libtemplate.so" "build/template.so"] :p))
+      (if (= os :macos)
+        (os/execute ["cp" "target/release/libtemplate.dylib" "build/template.dylib"] :p))
+      (if (= os :windows)
+        (os/execute ["cp" "target/release/template.dll" "build/template.dll"] :p))))
 
   (phony "build-debug" []
     (os/execute ["cargo" "build" "--debug" "--target-dir" "target" "--quiet"] :p)
     (os/execute ["mkdir" "-p" "build"] :p)
-    (os/execute ["cp" "target/debug/libtemplate.so" "build/template.so"] :p)
-    (os/execute ["cp" "target/debug/libtemplate.a" "build/template.a"] :p))
+    (os/execute ["cp" "target/debug/libtemplate.a" "build/template.a"] :p)
+    (let [os (os/which)]
+      (if (= os :linux)
+        (os/execute ["cp" "target/debug/libtemplate.so" "build/template.so"] :p))
+      (if (= os :macos)
+        (os/execute ["cp" "target/debug/libtemplate.dylib" "build/template.dylib"] :p))
+      (if (= os :windows)
+        (os/execute ["cp" "target/debug/template.dll" "build/template.dll"] :p))))
 
   (phony "all" ["build-rust-code" "cp-lib"])
 
@@ -27,5 +39,4 @@
   (phony "clean-target" []
     (os/execute ["rm" "-rf" "target"] :p))
 
-  (add-dep "clean" "clean-target")
-)
+  (add-dep "clean" "clean-target"))
