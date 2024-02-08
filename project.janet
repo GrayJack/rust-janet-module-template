@@ -6,11 +6,9 @@
     :name "template"
     :source [])
 
-  (phony "build-rust-code" []
-    (os/execute ["cargo" "build" "--release" "--target-dir" "target"] :p))
-
-  (phony "cp-lib" []
+  (phony "build-release" []
     (os/execute ["mkdir" "-p" "build"] :p)
+    (os/execute ["cargo" "build" "--release" "--target-dir" "target" "--quiet"] :p)
     (os/execute ["cp" "target/release/libtemplate.a" "build/template.a"] :p)
     (let [os (os/which)]
       (if (= os :linux)
@@ -32,7 +30,7 @@
       (if (= os :windows)
         (os/execute ["cp" "target/debug/template.dll" "build/template.dll"] :p))))
 
-  (phony "all" ["build-rust-code" "cp-lib"])
+  (phony "all" ["build-release"])
 
   (add-dep "build" "all")
 
