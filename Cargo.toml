@@ -2,7 +2,7 @@
 name = "template"
 version = "0.1.0"
 authors = ["Author <email@provider.com>"]
-edition = "2018"
+edition = "2021"
 
 [profile.dev]
 panic = "abort"
@@ -15,7 +15,7 @@ crate-type = ["cdylib", "staticlib"]
 bench = false
 
 [dependencies]
-janetrs = "0.4.0"
+janetrs = { version = "0.6.0", features = ["link-system"] }
 
 [features]
 default = []
