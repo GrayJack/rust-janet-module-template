@@ -9,6 +9,7 @@ panic = "abort"
 
 [profile.release]
 panic = "abort"
+strip = true
 
 [lib]
 crate-type = ["cdylib", "staticlib"]
@@ -21,4 +22,4 @@ janetrs = { version = "0.8.0", default-features = false, features = ["std", "uni
 default = ["system-janet"]
 ## Feature to link to system Janet
 # If the version of the system Janet if different from the version the JanetRS header comes from, you can use the `system feature flag`
-system-janet = ["janetrs/link-system"]
+system-janet = ["janetrs/system"]
