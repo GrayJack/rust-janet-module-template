@@ -39,9 +39,9 @@
         (os/execute ["cargo" "build" release? "--target-dir" "target" "--quiet" ;cargo-extra-args] :p))
 
   (rule "mv2build" ["cargo"]
-        (os/execute ["cp" (string rs-build-target rs-name statext) sname] :p)
-        (os/execute ["cp" (string rs-build-target rs-name os-dyn-extension) lname2] :p)
-        (os/execute ["cp" (string rs-build-target rs-name os-dyn-extension) lname] :p))
+        (copyfile (string rs-build-target rs-name statext) sname)
+        (copyfile (string rs-build-target rs-name os-dyn-extension) lname2)
+        (copyfile (string rs-build-target rs-name os-dyn-extension) lname))
 
   (add-output "mv2build" sname)
   (add-output "mv2build" lname)
@@ -50,7 +50,7 @@
   (install-rule lname path)
   (install-rule sname path)
 
-  # Add meta file
+# Add meta file
   (def metaname (modpath-to-meta lname))
   (def ename (entry-name name))
   (rule metaname []
@@ -69,7 +69,7 @@
   (install-rule metaname path)
 
   (rule "clean-target" []
-        (os/execute ["rm" "-rf" "target"] :p))
+        (os/execute ["cargo" "clean" "--target-dir" "target"] :p))
   (add-dep "clean" "clean-target"))
 
 
